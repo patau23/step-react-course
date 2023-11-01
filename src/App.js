@@ -17,23 +17,26 @@ const App = () => {
     inputBody: "",
   });
 
+  useEffect(() => {
+    const fetchPosts = () => {
+      return axios.get("https://jsonplaceholder.typicode.com/posts?_limit=10");
+    };
+    fetchPosts()
+      .then((res) => {
+        console.log(res.data);
+        return res.data;
+      })
+      .then((data) =>
+        setState((prev) => ({ ...prev, posts: [...data, ...prev.posts] }))
+      );
+  }, []);
+
   const openModal = () => {
     setState((prev) => ({
       ...prev,
       isShown: !prev.isShown,
     }));
   };
-
-  // useEffect(async () => {
-  //   await fetchApi();
-  // }, []);
-
-  // const fetchApi = async () => {
-  //   const response = await axios.get(
-  //     "https://jsonplaceholder.typicode.com/posts?_limit=10"
-  //   );
-  //   console.log(response.data);
-  // };
 
   const createPost = () => {
     setState((prev) => ({
@@ -49,6 +52,14 @@ const App = () => {
     }));
   };
 
+  const deletePost = (id) => {
+    const data = state.posts.filter((post) => post.id !== id);
+    setState((prev) => ({
+      ...prev,
+      posts: data,
+    }));
+  };
+
   return (
     <div>
       <button onClick={openModal}>Создать пост</button>
@@ -60,7 +71,7 @@ const App = () => {
           createPost={createPost}
         />
       </Modal>
-      <PostList posts={state.posts} />
+      <PostList posts={state.posts} deletePost={deletePost} />
     </div>
   );
 };

@@ -1,10 +1,10 @@
 import Post from "./Post.jsx";
 
-function PostList({ posts }) {
+function PostList({ posts, deletePost }) {
   return (
     <>
       {posts.map((post, index) => {
-        return <Post value={post} key={index}></Post>;
+        return <Post value={post} deletePost={deletePost} key={index}></Post>;
       })}
     </>
   );

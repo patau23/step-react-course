@@ -1,4 +1,4 @@
-function Post({ value }) {
+function Post({ value, deletePost }) {
   return (
     <>
       <hr />
@@ -6,6 +6,7 @@ function Post({ value }) {
         <p>{value.id}</p>
         <p>{value.title}</p>
         <p>{value.body}</p>
+        <button onClick={() => deletePost(value.id)}>Удалить</button>
       </div>
       <hr />
     </>
@@ -13,3 +14,4 @@ function Post({ value }) {
 }
 
 export default Post;
+
